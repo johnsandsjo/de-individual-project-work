@@ -8,14 +8,14 @@ import sys
 sys.path.insert(0, "../data_extract_load")
 from dlt_daily_update import job_ads_source
 
-db_path = str(Path(__file__).parents[1] / "data_warehouse/job_advertisments.duckdb")
+db_path = str(Path(__file__).parents[1] / "data_warehouse/prj_job_advertisments.duckdb")
 
 # asset
 dlt_resource = DagsterDltResource()
 
 ## create dlt asset
 @dlt_assets(dlt_source= job_ads_source(),dlt_pipeline= dlt.pipeline(
-    pipeline_name = "job_ads_stream_daily",
+    pipeline_name = "prj_job_ads_daily_stream",
     dataset_name = "staging",
     destination = dlt.destinations.duckdb(db_path))
     )
@@ -24,6 +24,7 @@ def dlt_load(context: dg.AssetExecutionContext, dlt: DagsterDltResource):
     
 ## create dbt asset
 dbt_project_dir = Path(__file__).parents[1] / "data_transformation"
+
 profiles_path = Path.home() / ".dbt"
 
 dbt_project = DbtProject(project_dir= dbt_project_dir, profiles_dir = profiles_path)
@@ -44,7 +45,7 @@ job_dbt = dg.define_asset_job("job_dbt", selection = dg.AssetSelection.key_prefi
 # schedule
 schedule_dlt = dg.ScheduleDefinition(
     job= job_dlt,
-    cron_schedule= "33 12 * * *"
+    cron_schedule= "45 21 * * *"
 )
 
 # sensor

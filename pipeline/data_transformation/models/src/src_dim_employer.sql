@@ -1,6 +1,6 @@
 
-WITH src_employment AS (SELECT * FROM {{ source('job_ads', 'stg_snapshot_job_ads') }}),
-src_stream_employer AS (SELECT * FROM {{ source('job_ads', 'stg_stream_job_ads') }})
+WITH src_employment AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_bulk') }}),
+src_stream_employer AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_daily') }})
 
 SELECT 
     id,

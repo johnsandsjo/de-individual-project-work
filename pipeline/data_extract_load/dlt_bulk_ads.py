@@ -5,7 +5,7 @@ from pathlib import Path
 import os
 
 
-db_path = str(Path(__file__).parents[1] / "data_warehouse/job_advertisments.duckdb")
+db_path = str(Path(__file__).parents[1] / "data_warehouse/prj_job_advertisements.duckdb")
 
 def _get_ads(url):
     response = requests.get(url)
@@ -17,14 +17,14 @@ def jobsearch_resource():
     url = "https://jobstream.api.jobtechdev.se/snapshot"
     
     data = _get_ads(url)
-    target_occupation_ids = {"E7hm_BLq_fqZ", "GazW_2TU_kJw", "apaJ_2ja_LuF"}
+    target_occupation_ids = {"6Hq3_tKo_V57", "apaJ_2ja_LuF"}
     for ad in data:
         if ad["occupation_field"]["concept_id"] in target_occupation_ids:
             yield ad
 
 def run_pipeline(table_name):
     pipeline = dlt.pipeline(
-        pipeline_name="job_ads_snapshot",
+        pipeline_name="prj_job_ads_bulk_update",
         destination=dlt.destinations.duckdb(db_path),
         dataset_name="staging",
     )
@@ -37,6 +37,6 @@ if __name__ == "__main__":
     working_directory = Path(__file__).parent
     os.chdir(working_directory)
 
-    table_name = "arbetsformedling_ads"
+    table_name = "prj_job_ads_bulk"
 
     run_pipeline(table_name=table_name)

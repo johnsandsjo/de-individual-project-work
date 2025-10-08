@@ -1,11 +1,11 @@
-WITH job_ads AS (SELECT * FROM {{ source('job_ads', 'stg_snapshot_job_ads') }}), 
-stream_job_ads AS (SELECT * FROM {{ source('job_ads', 'stg_stream_job_ads') }}),
-must_have_skills_snapshot AS (SELECT * FROM {{ source('job_ads', 'stg_job_ads_must_have_skills') }}),
-must_have_work_exp_snapshot AS (SELECT * FROM {{ source('job_ads', 'stg_job_ads_must_have_work_exp') }}),
-must_have_edu_level_snapshot AS (SELECT * FROM {{ source('job_ads', 'stg_job_ads_must_have_education_level') }}),
-must_have_skills_stream AS (SELECT * FROM {{ source('job_ads', 'stg_job_ads_must_have_skills_stream') }}),
-must_have_work_exp_stream AS (SELECT * FROM {{ source('job_ads', 'stg_job_ads_must_have_work_exp_stream') }}),
-must_have_edu_level_stream AS (SELECT * FROM {{ source('job_ads', 'stg_job_ads_must_have_education_level_stream') }})
+WITH job_ads AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_bulk') }}), 
+stream_job_ads AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_daily') }}),
+must_have_skills_snapshot AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_bulk_must_have_skills') }}),
+must_have_work_exp_snapshot AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_bulk__must_have_work_exp') }}),
+must_have_edu_level_snapshot AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_bulk_must_have_education_level') }}),
+must_have_skills_stream AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_must_have_skills_stream') }}),
+must_have_work_exp_stream AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_must_have_work_exp_stream') }}),
+must_have_edu_level_stream AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_must_have_education_level_stream') }})
 --Remove all removed
 SELECT
     id,
