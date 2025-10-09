@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, "../data_extract_load")
 from dlt_daily_update import job_ads_source
 
-db_path = str(Path(__file__).parents[1] / "data_warehouse/prj_job_advertisments.duckdb")
+db_path = str(Path(__file__).parents[1] / "data_warehouse/prj_job_advertisements.duckdb")
 
 # asset
 dlt_resource = DagsterDltResource()

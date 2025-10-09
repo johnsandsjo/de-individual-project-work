@@ -1,4 +1,4 @@
 SELECT
     occupation_field
 FROM {{ ref('dim_occupation') }}
-WHERE occupation_field NOT IN ('Säkerhet och bevakning', 'Yrken med social inriktning', 'Data/IT')
+WHERE occupation_field NOT IN ('Data/IT', 'Yrken med teknisk inriktning')

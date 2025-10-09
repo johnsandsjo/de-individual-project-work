@@ -5,13 +5,13 @@ sources:
     tables:
       #bulk endpoint / snapshot
       - name: stg_job_ads_bulk
-        identifier: prj_job_ads_bulk_update
+        identifier: prj_job_ads_bulk
       - name: stg_job_ads_bulk_must_have_skills
-        identifier: prj_job_ads_bulk_update__must_have__skills
+        identifier: prj_job_ads_bulk__must_have__skills
       - name: stg_job_ads_bulk__must_have_work_exp
-        identifier: prj_job_ads_bulk_update__must_have__work_experiences
+        identifier: prj_job_ads_bulk__must_have__work_experiences
       - name: stg_job_ads_bulk_must_have_education_level
-        identifier: prj_job_ads_bulk_update__must_have__education_level
+        identifier: prj_job_ads_bulk__must_have__education_level
       #daily endpoint / stream
       - name: stg_job_ads_daily
         identifier: prj_daily_job_ads

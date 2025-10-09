@@ -30,7 +30,7 @@ dbt-core==1.10.13
 dbt-duckdb==1.9.6
 dbt-extractor==0.6.0
 dbt-mcp==0.10.1
-dbt-protos==1.0.382
+dbt-protos==1.0.317
 dbt-semantic-interfaces==0.9.0
 dbt-sl-sdk==0.13.0
 dbtlabs-vortex==0.2.0
