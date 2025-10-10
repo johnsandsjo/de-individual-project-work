@@ -17,7 +17,7 @@ def jobsearch_resource():
     url = "https://jobstream.api.jobtechdev.se/snapshot"
     
     data = _get_ads(url)
-    target_occupation_ids = {"6Hq3_tKo_V57", "apaJ_2ja_LuF"}
+    target_occupation_ids = {"6Hq3_tKo_V57", "apaJ_2ja_LuF", "GazW_2TU_kJw", "E7hm_BLq_fqZ"}
     for ad in data:
         if ad["occupation_field"]["concept_id"] in target_occupation_ids:
             yield ad

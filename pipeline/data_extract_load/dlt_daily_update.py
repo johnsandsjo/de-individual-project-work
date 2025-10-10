@@ -17,7 +17,7 @@ def jobsearch_resource():
     url = "https://jobstream.api.jobtechdev.se/stream"
     params = {
         'date': f"{today_date}T00:00:00",
-        "occupation-concept-id": {"6Hq3_tKo_V57", "apaJ_2ja_LuF"}
+        "occupation-concept-id": {"6Hq3_tKo_V57", "apaJ_2ja_LuF", "GazW_2TU_kJw", "E7hm_BLq_fqZ"}
         }
     headers = {
         'accept': 'application/json'
