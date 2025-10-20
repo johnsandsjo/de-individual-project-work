@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "dbt-mcp": {
+      "command": "uvx",
+      "args" : [
+        "dbt-mcp"
+      ],
+      "env": {
+        "DBT_PROJECT_DIR": "/Users/john.sandsjo/Documents/github/de-individual-project-work/pipeline/data_transformation",
+        "DBT_PATH": "/Users/john.sandsjo/Documents/github/de-individual-project-work/.venv/bin/dbt",
+        "DBT_PROFILES_DIR": "/Users/john.sandsjo/.dbt"
+      }
+    }
+  }
+}

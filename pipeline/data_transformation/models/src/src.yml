@@ -33,3 +33,5 @@ sources:
         meta:
           dagster: 
             asset_key: ["stream_edu_dlt_job_ads_source_jobsearch_resource"]
+      - name: scb_stats
+        identifier: scb_stats
