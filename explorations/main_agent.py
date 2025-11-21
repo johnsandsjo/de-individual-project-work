@@ -11,7 +11,7 @@ model_name = "gemini/gemini-2.5-flash"
 async def run(mcp_server):
     agent = Agent(
         name="Analytics Enginer Assistant",
-        instructions=f"You should answer questions about source data in this dbt Core project. For this you will need to read the files using the mcp server tools.",
+        instructions=f"You should answer questions about mart models in this dbt Core project. For this you will need to read the files using the mcp server tools.",
         mcp_servers=[mcp_server],
         model=LitellmModel(model=model_name)
     )

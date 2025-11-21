@@ -1,9 +1,8 @@
 {
   "mcpServers": {
     "dbt-mcp": {
-      "command": "uvx",
-      "args" : [
-        "dbt-mcp"
+      "command": "uv",
+      "args": ["run", "dbt-mcp", "stdio"
       ],
       "env": {
         "DBT_PROJECT_DIR": "/Users/john.sandsjo/Documents/github/de-individual-project-work/pipeline/data_transformation",

@@ -103,34 +103,11 @@ models:
         description: "occupation_group, sub group to occupation_field"
       - name: occupation_field
         description: "occupation_field, area of the occupation concern"
-  - name: dim_education
-    description: "Dimension table for education statistics."
-    columns:
-      - name: education_key
-        description: "Primary key for the education dimension."
-        data_tests:
-          - not_null
-          - unique
-      - name: university
-        description: "The name of the university or school."
-        data_tests:
-          - not_null
-      - name: degree
-        description: "The degree obtained."
-        data_tests:
-          - not_null
-      - name: education_length
-        description: "The length of the education program."
-      - name: gender
-        description: "The gender of the student."
-        data_tests:
-          - accepted_values:
-              values: ['Male', 'Female', 'Other']
-      - name: year_2023_2024
-        description: "The academic year of the statistics."
+        
   - name: mart_data_it
     description: "Mart layer serving the Data and IT dashboard"
   - name: mart_safety
     description: "Mart layer serving the Safety and Security dashboard"
   - name: mart_social_work
     description: "Mart layer serving the Social work dashboard"
+    
