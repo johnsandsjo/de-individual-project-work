@@ -31,8 +31,7 @@ agent = Agent(
             You are a helpful agent to help with my dbt project. Make use of the dbt mcp server
             """
         ),
-        toolsets=[dbt_mcp_server],
-        tools=[write_data]
+        toolsets=[dbt_mcp_server]
 )
 
 

@@ -1,0 +1,16 @@
+sources:
+- name: dbt_agent
+  database: prj_job_advertisements
+  schema: staging
+  tables:
+  - name: scb_stats_stage
+    description: Statistics for Swedish universities
+    identifier: scb_stats
+    columns:
+    - name: universitet_h_gskola
+    - name: examen
+    - name: utbildningsl_ngd
+    - name: k_n
+    - name: _2023_24
+    - name: _dlt_load_id
+    - name: _dlt_id

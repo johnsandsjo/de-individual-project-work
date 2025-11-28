@@ -17,7 +17,7 @@ def read_data():
 
 def write_data(file_name, content):
     """ Write the data to a new sql file inside the models folder"""
-    with open(f"../pipeline/data_transformation/models/src/{file_name}.sql", "a") as f:
+    with open(f"../pipeline/data_transformation/models/src/{file_name}", "w") as f:
         f.write(content)
 
 
