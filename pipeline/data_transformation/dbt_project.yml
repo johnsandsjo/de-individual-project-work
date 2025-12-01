@@ -33,7 +33,7 @@ models:
   dbt_project_john:
     +materialized: view
 
-    src:
+    source:
       +materialized: ephemeral
       +schema: staging
 

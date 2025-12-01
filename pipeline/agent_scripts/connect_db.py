@@ -2,7 +2,7 @@ from pathlib import Path
 import duckdb
 import pandas as pd
 
-DATA_PATH = Path(__file__).parents[1] / "pipeline/data_warehouse"
+DATA_PATH = Path(__file__).parents[1] / "data_warehouse"
 
 def query_data_warehouse(table_name : str):
     with duckdb.connect(DATA_PATH / "prj_job_advertisements.duckdb") as conn:

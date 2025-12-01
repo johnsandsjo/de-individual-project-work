@@ -9,7 +9,7 @@ import yaml
 load_dotenv()
 env_path = Path(__file__).parents[2]/".env"
 
-src_models_path = Path(__file__).parents[1]/"pipeline/data_transformation/models/source"
+src_models_path = Path(__file__).parents[1]/"data_transformation/models/source"
 
 first_agent = Agent(
     model="google-gla:gemini-2.0-flash",

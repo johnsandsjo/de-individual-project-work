@@ -17,20 +17,20 @@ sources:
         identifier: prj_daily_job_ads
         meta:
           dagster: 
-            asset_key: ["dlt_job_ads_source_jobsearch_resource"]
-      - name: stg_job_ads_must_have_skills_stream
+            asset_key: ["stg_stream_main"]
+      - name: stg_job_ads_daily_must_have_skills
         identifier: prj_daily_job_ads__must_have__skills
         meta:
           dagster: 
-            asset_key: ["stream_skills_dlt_job_ads_source_jobsearch_resource"]
-      - name: stg_job_ads_must_have_work_exp_stream
+            asset_key: ["stg_stream_skills"]
+      - name: stg_job_ads_daily_must_have_work_exp
         identifier: prj_daily_job_ads__must_have__work_experiences
         meta:
           dagster: 
-            asset_key: ["stream_work_exp_dlt_job_ads_source_jobsearch_resource"]
-      - name: stg_job_ads_must_have_education_level_stream
+            asset_key: ["stg_stream_work_exp"]
+      - name: stg_job_ads_daily_must_have_education_level
         identifier: prj_daily_job_ads__must_have__education_level
         meta:
           dagster: 
-            asset_key: ["stream_edu_dlt_job_ads_source_jobsearch_resource"]
+            asset_key: ["stg_stream_edu"]
             

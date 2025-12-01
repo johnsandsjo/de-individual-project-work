@@ -15,7 +15,7 @@ dlt_resource = DagsterDltResource()
 
 ## create dlt asset
 @dlt_assets(dlt_source= job_ads_source(),dlt_pipeline= dlt.pipeline(
-    pipeline_name = "prj_job_ads_daily_stream",
+    pipeline_name = "jobsearch",
     dataset_name = "staging",
     destination = dlt.destinations.duckdb(db_path))
     )
