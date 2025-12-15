@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 db_path = str(Path(__file__).parents[1] / "data_warehouse/prj_job_advertisements.duckdb")
-data_path = Path(__file__).parents[1] / "agent_script/data"
+data_path = Path(__file__).parents[1] / "agent_scripts/data"
 
 @dlt.resource(write_disposition="replace")
 def csv_resource():

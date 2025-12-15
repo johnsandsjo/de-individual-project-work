@@ -1,10 +1,11 @@
 from pydantic_ai import Agent, RunUsage
 from pydantic_ai.mcp import MCPServerStdio
-from modelling import FilePrompt, DbtSourceYml, SqlFileContent
-from connect_db import query_data_warehouse
+from pipeline.agent_scripts.data_models import YAMLPromptDetails, SRCfile, DbtSourceYml, SqlFileContent
 from dotenv import load_dotenv
 from pathlib import Path
-import yaml
+from connect_db import query_data_warehouse
+from agent_tools import create_new_yml_file, create_new_sql_file
+
 
 load_dotenv()
 env_path = Path(__file__).parents[2]/".env"
@@ -13,39 +14,26 @@ src_models_path = Path(__file__).parents[1]/"data_transformation/models/source"
 
 first_agent = Agent(
     model="google-gla:gemini-2.0-flash",
-    output_type=FilePrompt,
     system_prompt="""
-    Make use of your tools to fetch data from a table mentioned in the prompt.
-    Based on the columns of this table, create a prompt to another agent that will create one yml file.
-    Include a suitable table name in prompt as well a brief description of what it includes.
-    Convert the output of the tool into a string in your new prompt
+    Your task is to analyze the column headers from the source data provided by the 'query_data_warehouse' tool.
+    DO NOT return the raw data. Analyze the data to determine the column schema.
+    Based on the column names, create a suitable table name, a brief description, and a list of all column names.
+    Adhere strictly to the 'YAMLPromptDetails' Pydantic output format.
     """,
+    output_type=YAMLPromptDetails,
     tools=[query_data_warehouse]
     )
-
-def create_new_yml_file(yml_data : DbtSourceYml):
-    """Accepts a validated Pydantic object and dumps it into a new yml file."""
-    #from Pydantic object to standard Python dict
-    data_dict = yml_data.model_dump(exclude_none=True,)
-
-    #make it idempotent
-    Path.mkdir(src_models_path, parents=True, exist_ok=True)
-
-    with open(f"{src_models_path}/new_source.yml", 'w') as file:
-        yaml.dump(data_dict, file, sort_keys=False, indent=2)
-
-    return f"Successfully created dbt YAML file: new_source.yml"
-
 
 # Second agent takes the result of the first agent
 second_agent = Agent(
     model="google-gla:gemini-2.0-flash",
     output_type=DbtSourceYml,
     system_prompt="""
-    Based on the input data, generate a Python dictionary that conforms to the YAML structure in the output type. 
-    The table name, table description and table identifier should be suited based on the input data.
-    It MUST be a valid JSON/Dictionary.
-    Finally you MUST call the tool: create_new_yml_file with the object as input.
+    You have received a prompt detailing a database table schema (name, description, and columns).
+    Your task is to generate a dbt schema documentation YAML file based on this input.
+    The YAML content must be valid, correctly indented, and adhere strictly to the dbt documentation format.
+    The file name should correspond to the model name in the prompt.
+    Adhere strictly to the 'YMLFile' Pydantic output format.
     """,
     tools=[create_new_yml_file],
     retries=3
@@ -54,28 +42,16 @@ second_agent = Agent(
 #third agent doing the same as agent one but with sql prompt
 third_agent = Agent(
     model="google-gla:gemini-2.0-flash",
-    output_type=FilePrompt,
+    output_type=SRCfile,
     system_prompt="""
-    You will recieve a table name from the prompt in the format [schema_name].[table_name].
-    Make use of the full name when using your tool to fetch data from a data warehouse.
-    
-    Based on the columns of this table, create a prompt to another agent that will create one sql file.
-    
-    CRITICAL NAMING RULE: The table name used in the subsequent prompt MUST be the [table_name] part 
-    of the input (e.g., if the input is staging.scb_stats, use 'scb_stats'). DO NOT add any prefixes like 'stg_'.
-    
-    Include this non-prefixed table name in the new prompt, along with a brief description of what it includes.
-    Convert the output of the tool into a string in your new prompt.
+    You have recieved a table name from the prompt in the format [schema_name].[table_name].
+    Make use of this full name then use your tool query_data_warehouse to fetch data from the data warehouse source.
+    Your task is to prepare for a dbt source sql file based on this input to SELECT from the source.
+    The SQL content must be valid and adhere strictly to the dbt documentation format.
+    Adhere strictly to the 'SRCfile' Pydantic output format.
     """,
     tools=[query_data_warehouse]
     )
-
-def create_new_sql_file(sql_data):
-    """Create a new source as a sql file inside the models/source folder"""
-    #makes it idempotent
-    Path.mkdir(src_models_path, parents=True, exist_ok=True)
-    with open(f"{src_models_path}/new_sql.sql", "w") as f:
-        f.write(sql_data)
 
 # Fourth agent takes the result of the third agent
 fourth_agent = Agent(
@@ -84,7 +60,7 @@ fourth_agent = Agent(
     system_prompt="""
     Based on the input prompt, generate a valid SQL file.
     Use Jinja macros to fetch the source like '{{ source('dbt_agent', '[identifier]') }}'
-    Column names should be taken from the prompts and be renamed and data types enforced.
+    Column names should be taken from the prompt and be renamed and data types enforced.
     Finally you MUST call the tool: create_new_sql_file.
     """,
     tools=[create_new_sql_file],
@@ -101,8 +77,8 @@ mcp_agent = Agent(
         model='google-gla:gemini-2.0-flash',
         system_prompt=( 
             """
-            You are connected to the dbt Metadata and Control Plane (MCP) server. 
             Your primary directive is to execute dbt commands. 
+            You are connected to the dbt MCP server.
             When asked to run tests without a specific selector, default to running all tests. 
             ACTION: Run 'dbt test --select *' via the mcp server tool.
             """
@@ -130,7 +106,7 @@ async def agentic_workflow():
 
     print("\n" + "="*50)
     print(f"First agent's output:")
-    print(f"{first_agent_response.prompt}")
+    print(f"{first_agent_response}")
 
     #Human in the loop 1
     print()
@@ -157,7 +133,7 @@ async def agentic_workflow():
         usage=usage
         )
     print(f"Third agent's output:")
-    print(f"{result_three.output.prompt}")
+    print(f"{result_three.output}")
     print()
     input("Press ENTER to approve this prompt and run second agent")
     print()

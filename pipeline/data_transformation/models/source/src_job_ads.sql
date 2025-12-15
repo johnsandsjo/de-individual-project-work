@@ -14,7 +14,7 @@ SELECT
     publication_date,
     last_publication_date,
     headline,
-    description__text AS "description", 
+    description__text AS `description`, 
     description__text_formatted AS description_formatted,
     employment_type__label AS employment_type,
     duration__label AS duration,
@@ -33,7 +33,7 @@ WHERE id NOT IN (
     SELECT id
         FROM stream_job_ads
         WHERE removed = TRUE)
-UNION
+UNION DISTINCT
 --Union in the new ads
 SELECT
     id,
@@ -42,7 +42,7 @@ SELECT
     publication_date,
     last_publication_date,
     headline,
-    description__text AS "description", 
+    description__text AS `description`, 
     description__text_formatted AS description_formatted,
     employment_type__label AS employment_type,
     duration__label AS duration,

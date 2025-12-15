@@ -3,7 +3,7 @@ WITH src_employment AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_bulk')
 src_stream_employer AS (SELECT * FROM {{ source('dbt_agent', 'stg_job_ads_daily') }})
 
 SELECT 
-    id,
+    id, 
     EMPLOYER__NAME AS employer_name,
     EMPLOYER__WORKPLACE AS employer_workplace,
     EMPLOYER__ORGANIZATION_NUMBER AS employer_org_nr,
@@ -19,7 +19,7 @@ WHERE id NOT IN (
     SELECT id
         FROM src_stream_employer
         WHERE removed = TRUE)
-UNION
+UNION DISTINCT
 SELECT
     id,
     EMPLOYER__NAME AS employer_name,

@@ -5,8 +5,6 @@ from pathlib import Path
 import os
 
 
-db_path = str(Path(__file__).parents[1] / "data_warehouse/prj_job_advertisements.duckdb")
-
 def _get_ads(url):
     response = requests.get(url)
     response.raise_for_status()  # check for http errors
@@ -25,7 +23,7 @@ def jobsearch_resource():
 def run_pipeline(table_name):
     pipeline = dlt.pipeline(
         pipeline_name="prj_job_ads_bulk_update",
-        destination=dlt.destinations.duckdb(db_path),
+        destination="bigquery",
         dataset_name="staging",
     )
         

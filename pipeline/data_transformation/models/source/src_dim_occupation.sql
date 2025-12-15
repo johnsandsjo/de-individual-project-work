@@ -14,8 +14,7 @@ WHERE id NOT IN (
     SELECT id
         FROM src_stream_occupation
         WHERE removed = TRUE)
-
-UNION
+UNION DISTINCT
 SELECT
     id,
     OCCUPATION__LABEL AS occupation,

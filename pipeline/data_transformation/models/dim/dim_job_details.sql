@@ -4,7 +4,7 @@ SELECT
     id,
     max({{ dbt_utils.generate_surrogate_key(['id', 'headline','must_have_skills']) }}) as job_details_key,
     headline,
-    max("description") AS "description", 
+    max("description") AS `description`, 
     max(description_formatted) AS description_formatted,
     max(employment_type) AS employment_type,
     max({{fill_null('duration')}}) AS duration,

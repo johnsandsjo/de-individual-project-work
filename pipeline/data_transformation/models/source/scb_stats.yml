@@ -1,0 +1,24 @@
+sources:
+- name: dbt_agent
+  database: prj_job_advertisements
+  schema: staging
+  tables:
+  - name: scb_stats
+    description: This table contains statistics from SCB (Statistics Sweden) regarding
+      universities, degrees, education length, and gender.
+    identifier: staging.scb_stats
+    columns:
+    - name: university
+      data_type: string
+    - name: degree
+      data_type: string
+    - name: education_length
+      data_type: string
+    - name: gender
+      data_type: string
+    - name: year
+      data_type: string
+    - name: _dlt_load_id
+      data_type: string
+    - name: _dlt_id
+      data_type: string
