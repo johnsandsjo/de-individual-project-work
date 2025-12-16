@@ -1,26 +1,25 @@
-
 import pandas as pd 
 from pathlib import Path
 import json
-import duckdb
+from dotenv import load_dotenv
+from google.cloud import bigquery
+import os
 
+load_dotenv()
 
-db_path = str(Path(__file__).parents[2] / "pipeline/data_warehouse/job_advertisments.duckdb")
- 
 def query_job_listings(occupational_field):
+    client = bigquery.Client()
 
-    with duckdb.connect(db_path, read_only = True) as conn:
+    if occupational_field == "Data/IT":
+        table_id = "grad-work-john.marts.mart_data_it"
+    elif occupational_field == "Säkerhet och bevakning":
+        table_id = "grad-work-john.marts.mart_safety"
+    else:
+        table_id = "grad-work-john.marts.mart_social_work"
     
+    query = f"SELECT * FROM `{table_id}`"
 
-        if occupational_field == "Data/IT":
-            query='SELECT * FROM marts.mart_data_it'
-        elif occupational_field == "Säkerhet och bevakning":
-            query='SELECT * FROM marts.mart_safety'
-        else:
-            query='SELECT * FROM marts.mart_social_work'
-   
-        
-        return conn.query(f"{query}").df()
+    return client.query(query).to_dataframe()
     
     
 def read_json_data():

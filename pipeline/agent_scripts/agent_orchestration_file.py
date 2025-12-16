@@ -94,7 +94,6 @@ async def agentic_workflow():
     # Execute 1st agent
     prompt_input = input("Give the name of the new source as provided in the warehouse ")
     print()
-    #staging.prj_daily_job_ads
     prompt_one = prompt_input
 
     result_one = await first_agent.run(

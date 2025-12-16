@@ -1,5 +1,4 @@
-import plotly.express as px 
-
+import plotly.express as px
 
 
 #Number of Vacancies by Occupation

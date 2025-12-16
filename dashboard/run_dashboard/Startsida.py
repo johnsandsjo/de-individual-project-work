@@ -1,4 +1,11 @@
 import streamlit as st
+import sys
+from pathlib import Path
+
+# This finds the directory TWO levels up from Startsida.py (the project root)
+root_path = Path(__file__).resolve().parents[1]
+if str(root_path) not in sys.path:
+    sys.path.insert(0, str(root_path))
 
 def layout():
     st.set_page_config(

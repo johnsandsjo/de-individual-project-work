@@ -1,13 +1,11 @@
-
 from setuptools import setup, find_packages
 
 setup(
-    name= "HR-agency",
-    version= "0.0.1",
-    description="""
-    This page is used for creating dashboard in streamlit for HR-agency""",
-    author= "Marcus, Hazan, John",
-    install_requires = ["pandas", "streamlit", "duckdb", "openpyxl"],
-    packages= find_packages(exclude=("exploration*", "dbt_job_ads*", "pipeline*", "logs*", "worksheets")),
+    name= "HR-dashboard",
+    version= "0.0.2",
+    description="""Used for creating dashboard in streamlit for HR-dashboard""",
+    author= "John",
+    install_requires = ["pandas", "streamlit", "bigquery", "openpyxl"],
+    packages= find_packages(exclude=("exploration*", "pipeline*", "logs*")),
     python_requires =">=3.7"
 )
